@@ -1,0 +1,57 @@
+
+PS: In the Project Documentation after each result obtained , I have specified the commands to be run in order to obtain the same result.
+
+Please rename the folder which consists of all wikipedia files to "wiki"
+
+Please add the Stanford Core NLP jar files in the current directory along with the required Lucene jar files. Rename the Lucene JAR files to jar1, jar2, jar3, jar4 In order to compile the program, the command needs to be given as follows:
+
+javac -cp ".;jar1.jar;jar2.jar;jar3.jar;jar4.jar"  Project.java (in Windows)
+javac -cp ".:jar1.jar:jar2.jar:jar3.jar:jar4.jar"  Project.java (in Linux)
+
+In order to run the program the command needs to be given as follows:
+java -cp ".;jar1.jar;jar2.jar;jar3.jar;jar4.jar" Project  <directory name> <Stemming/No stemming> <Scoring Method> <original/improved method> <filename>  [<k value> <b value>] (in Windows)
+java -cp ".:jar1.jar:jar2.jar:jar3.jar:jar4.jar" Project  <directory name> <Stemming/No stemming> <Scoring Method> <original/improved method> <filename>  [<k value> <b value>] (in Linux)
+
+
+
+[ ]-> required only when Scoring Method is BM25
+
+In the above command line arguments,
+1)The directory name ( eg: wiki) consists of all the Wikipedia documents.
+
+2)args[1] is 1 for Stemming and is 0 for NO Stemming
+
+3)args[2] is used to signify the scoring method.
+0 is used for the tf.idf model and 1 is used for the Okapi BM25 model.
+
+4)args[3] is used to signify the method which is used to obtain the results from the queries.
+0 is used for my original method
+1 is for my improved method after Error Analysis.
+
+5)args[4] is used to specify the type of file from which the questions are obtained:
+“training.txt” is the Training data set which consists of the first 20 questions present in the list.
+“testing.txt” is the Testing data set which consists of the remaining 80 questions present in the list.
+
+6)if args[2] is 1 i.e. you want to implement the BM25 model, the args[5] and args[6] HAVE to be filled up with K and B values.
+The default values are k=1.2 and b=0.75, which need to be specified, the best results were obtained when k=5.0 and b=0.0.
+
+The code can be run as follows, in the best case:
+
+javac -cp ".;jar1.jar;jar2.jar;jar3.jar;jar4.jar"  Project.java
+
+java -cp ".;jar1.jar;jar2.jar;jar3.jar;jar4.jar" Project  wiki 1 0 1 testing_set.txt
+(in Windows)
+
+javac -cp ".:jar1.jar:jar2.jar:jar3.jar:jar4.jar"  Project.java
+
+java ".:jar1.jar:jar2.jar:jar3.jar:jar4.jar" Project  wiki 1 0 1 testing_set.txt
+(in Linux)
+
+In order to run BM25 , code can be run as:
+
+java ".;jar1.jar;jar2.jar;jar3.jar;jar4.jar" Project  wiki 1 1 0 testing_set.txt 5.0 0.0 
+(in Windows)
+java ".:jar1.jar:jar2.jar:jar3.jar:jar4.jar" Project  wiki 1 1 0 testing_set.txt 5.0 0.0 
+(in Linux)
+
+The precision at 1, precision at 10 and Mean Reciprocal Rank are displayed at the end of the output.
